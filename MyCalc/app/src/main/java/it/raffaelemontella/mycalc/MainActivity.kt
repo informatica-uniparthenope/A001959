@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         findViewById<Button>(R.id.buttonAC).setOnClickListener { acListener() }
+        findViewById<Button>(R.id.buttonSign).setOnClickListener { signListener() }
 
         findViewById<Button>(R.id.button9).setOnClickListener { digitListener("9")  }
         findViewById<Button>(R.id.button8).setOnClickListener { digitListener("8")  }
@@ -48,6 +49,11 @@ class MainActivity : AppCompatActivity() {
         operator=""
     }
 
+    private fun signListener() {
+        val display = findViewById<TextView>(R.id.textDisplay)
+        display.text=(display.text.toString().toFloat().toDouble()*-1).toString()
+    }
+
     private fun digitListener(key: String) {
         val display = findViewById<TextView>(R.id.textDisplay)
         if (display.text.equals("0.0")) {
@@ -66,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     fun opListener(op: String) {
 
-        operator = op
+
 
         val display = findViewById<TextView>(R.id.textDisplay)
 
@@ -75,35 +81,39 @@ class MainActivity : AppCompatActivity() {
             accumulator = display.text.toString().toFloat().toDouble()
             display.text = "0.0"
         } else {
-            var res: Double = 0.0
+
             val operand = display.text.toString().toFloat().toDouble()
-            when(op) {
-                "add" -> res = accumulator + operand
-                "sub" -> res = accumulator - operand
-                "mul" -> res = accumulator * operand
-                "div" -> res = accumulator / operand
+            val res = when(op) {
+                "add" -> accumulator + operand
+                "sub" -> accumulator - operand
+                "mul" -> accumulator * operand
+                "div" -> accumulator / operand
+                else -> Double.NaN
             }
 
             display.text = "0.0"
 
             accumulator = res
         }
+        operator = op
     }
 
     private fun resListener() {
         val display = findViewById<TextView>(R.id.textDisplay)
 
-        var res: Double = 0.0
+
         val operand = display.text.toString().toFloat().toDouble()
-        when(operator) {
-            "add" -> res = accumulator + operand
-            "sub" -> res = accumulator - operand
-            "mul" -> res = accumulator * operand
-            "div" -> res = accumulator / operand
+        val res = when(operator) {
+            "add" -> accumulator + operand
+            "sub" -> accumulator - operand
+            "mul" -> accumulator * operand
+            "div" -> accumulator / operand
+            else -> Double.NaN
         }
 
         display.text = res.toString()
 
         accumulator = 0.0
+        operator = ""
     }
 }
