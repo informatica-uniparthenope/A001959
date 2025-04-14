@@ -17,5 +17,10 @@ class MainActivity : AppCompatActivity() {
             val display = findViewById<TextView>(R.id.textDisplay)
             display.text = "9"
         }
+
+        findViewById<Button>(R.id.buttonAC).setOnClickListener {
+            val display = findViewById<TextView>(R.id.textDisplay)
+            display.text = "0.0"
+        }
     }
 }
